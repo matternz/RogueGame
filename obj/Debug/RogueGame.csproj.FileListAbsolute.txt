@@ -1,0 +1,15 @@
+C:\Users\Matthew\Documents\GitHub\C#\RogueGame\RogueGame\bin\Debug\terminal8x8.png
+C:\Users\Matthew\Documents\GitHub\C#\RogueGame\RogueGame\bin\Debug\RogueGame.exe.config
+C:\Users\Matthew\Documents\GitHub\C#\RogueGame\RogueGame\bin\Debug\RogueGame.exe
+C:\Users\Matthew\Documents\GitHub\C#\RogueGame\RogueGame\bin\Debug\RogueGame.pdb
+C:\Users\Matthew\Documents\GitHub\C#\RogueGame\RogueGame\bin\Debug\OpenTK.dll
+C:\Users\Matthew\Documents\GitHub\C#\RogueGame\RogueGame\bin\Debug\RLNET.dll
+C:\Users\Matthew\Documents\GitHub\C#\RogueGame\RogueGame\bin\Debug\RogueSharp.dll
+C:\Users\Matthew\Documents\GitHub\C#\RogueGame\RogueGame\bin\Debug\OpenTK.xml
+C:\Users\Matthew\Documents\GitHub\C#\RogueGame\RogueGame\bin\Debug\OpenTK.dll.config
+C:\Users\Matthew\Documents\GitHub\C#\RogueGame\RogueGame\bin\Debug\RogueSharp.xml
+C:\Users\Matthew\Documents\GitHub\C#\RogueGame\RogueGame\obj\Debug\RogueGame.csprojAssemblyReference.cache
+C:\Users\Matthew\Documents\GitHub\C#\RogueGame\RogueGame\obj\Debug\RogueGame.csproj.CoreCompileInputs.cache
+C:\Users\Matthew\Documents\GitHub\C#\RogueGame\RogueGame\obj\Debug\RogueGame.csproj.CopyComplete
+C:\Users\Matthew\Documents\GitHub\C#\RogueGame\RogueGame\obj\Debug\RogueGame.exe
+C:\Users\Matthew\Documents\GitHub\C#\RogueGame\RogueGame\obj\Debug\RogueGame.pdb
