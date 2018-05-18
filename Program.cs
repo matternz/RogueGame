@@ -1,5 +1,6 @@
 ﻿using RLNET;
 using RogueGame.Core;
+using RogueGame.Systems;
 
 namespace RogueGame
 {
@@ -30,6 +31,7 @@ namespace RogueGame
         private static readonly int _inventoryHeight = 11;
         private static RLConsole _inventoryConsole;
 
+        public static DungeonMap DungeonMap { get; private set; }
 
         static void Main(string[] args)
         {
@@ -43,6 +45,10 @@ namespace RogueGame
             _statConsole = new RLConsole(_statWidth, _statHeight);
             _inventoryConsole = new RLConsole(_inventoryWidth, _inventoryHeight);
 
+            MapGenerator mapGenerator = new MapGenerator(_mapWidth, _mapHeight);
+            DungeonMap = mapGenerator.CreateMap();
+
+            // Set up a handler for RLNet's Update event
             _rootConsole.Update += OnRootConsoleUpdate;
             _rootConsole.Render += OnRootConsoleRender;
             _rootConsole.Run();
@@ -65,6 +71,7 @@ namespace RogueGame
 
         private static void OnRootConsoleRender(object sender, UpdateEventArgs e)
         {
+            DungeonMap.draw(_mapConsole);
             // Blits other consoles to root console
             RLConsole.Blit(_mapConsole, 0, 0, _mapWidth, _mapHeight, _rootConsole, 0, _inventoryHeight);
             RLConsole.Blit(_statConsole, 0, 0, _statWidth, _statHeight, _rootConsole, _mapWidth, 0);
@@ -73,5 +80,6 @@ namespace RogueGame
             // draws console to screen
             _rootConsole.Draw();
         }
+
     }
 }
