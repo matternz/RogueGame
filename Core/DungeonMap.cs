@@ -22,15 +22,34 @@ namespace RogueGame.Core
 
         private void SetConsoleSymbolForCell(RLConsole mapConsole, Cell cell)
         {
+            // don't draw unexplored cells
             if (!cell.IsExplored)
             {
                 return;
             }
+            // when the cell is in the current fov draw with lighter colors 
             if( IsInFov( cell.X, cell.Y))
             {
+                // '.' for floor '#' for walls
                 if (cell.IsWalkable)
                 {
                     mapConsole.Set(cell.X, cell.Y, Colors.FloorFov, Colors.FloorBackgroundFov, '.');
+                }
+                else
+                {
+                    mapConsole.Set(cell.X, cell.Y, Colors.Floor, Colors.FloorBackground, '#');
+                }
+            }
+            // when a cell is out of the current fov draw with darker colors
+            else
+            {
+                if (cell.IsWalkable)
+                {
+                    mapConsole.Set(cell.X, cell.Y, Colors.Floor, Colors.FloorBackground, '.');
+                }
+                else
+                {
+                    mapConsole.Set(cell.X, cell.Y, Colors.Wall, Colors.WallBackground, '#');
                 }
             }
 
