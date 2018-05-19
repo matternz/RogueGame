@@ -4,7 +4,7 @@ using RogueGame.Systems;
 
 namespace RogueGame
 {
-    public class Program
+    public class Game
     {
         // Screen console width/height measured in number of tiles
         private static readonly int _screenWidth = 100;
@@ -33,7 +33,9 @@ namespace RogueGame
 
         public static DungeonMap DungeonMap { get; private set; }
 
-        static void Main(string[] args)
+        public static Player Player { get; private set; }
+
+        public static void Main(string[] args)
         {
             string fontFileName = "terminal8x8.png";
             string windowName = "Rogue Game";
@@ -45,8 +47,11 @@ namespace RogueGame
             _statConsole = new RLConsole(_statWidth, _statHeight);
             _inventoryConsole = new RLConsole(_inventoryWidth, _inventoryHeight);
 
+            Player = new Player();
+
             MapGenerator mapGenerator = new MapGenerator(_mapWidth, _mapHeight);
             DungeonMap = mapGenerator.CreateMap();
+            DungeonMap.UpdatePlayerFieldOfView();
 
             // Set up a handler for RLNet's Update event
             _rootConsole.Update += OnRootConsoleUpdate;
@@ -72,13 +77,14 @@ namespace RogueGame
         private static void OnRootConsoleRender(object sender, UpdateEventArgs e)
         {
             DungeonMap.draw(_mapConsole);
+            Player.Draw(_mapConsole, DungeonMap);
             // Blits other consoles to root console
             RLConsole.Blit(_mapConsole, 0, 0, _mapWidth, _mapHeight, _rootConsole, 0, _inventoryHeight);
             RLConsole.Blit(_statConsole, 0, 0, _statWidth, _statHeight, _rootConsole, _mapWidth, 0);
             RLConsole.Blit(_messageConsole, 0, 0, _messageWidth, _messageHeight, _rootConsole, 0, _screenHeight - _messageHeight);
             RLConsole.Blit(_inventoryConsole, 0, 0, _inventoryWidth, _inventoryHeight, _rootConsole, 0, 0);
-            // draws console to screen
             _rootConsole.Draw();
+
         }
 
     }
