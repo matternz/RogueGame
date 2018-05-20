@@ -35,6 +35,10 @@ namespace RogueGame
 
         public static Player Player { get; private set; }
 
+        private static bool _renderRequired = true;
+        
+        public static CommandSystem CommandSystem { get; private set; }
+
         public static void Main(string[] args)
         {
             string fontFileName = "terminal8x8.png";
@@ -53,38 +57,88 @@ namespace RogueGame
             DungeonMap = mapGenerator.CreateMap();
             DungeonMap.UpdatePlayerFieldOfView();
 
+            CommandSystem = new CommandSystem();
+
             // Set up a handler for RLNet's Update event
             _rootConsole.Update += OnRootConsoleUpdate;
-            _rootConsole.Render += OnRootConsoleRender;
-            _rootConsole.Run();
-        }
 
-        private static void OnRootConsoleUpdate(object sender, UpdateEventArgs e)
-        {
-            _mapConsole.SetBackColor(0, 0, _mapWidth, _mapHeight, Colors.FloorBackground);
-            _mapConsole.Print(1, 1, "Map", Colors.TextHeading);
+            // Set up a handler for RLNet's Render event
+            _rootConsole.Render += OnRootConsoleRender;
 
             _messageConsole.SetBackColor(0, 0, _messageWidth, _messageHeight, Swatch.DbDeepWater);
-            _messageConsole.Print(1, 1, "Message", Colors.TextHeading);
+            _messageConsole.Print(1, 1, "Messages", Colors.TextHeading);
 
             _statConsole.SetBackColor(0, 0, _statWidth, _statHeight, Swatch.DbOldStone);
-            _statConsole.Print(1, 1, "Stat", Colors.TextHeading);
+            _statConsole.Print(1, 1, "Stats", Colors.TextHeading);
 
             _inventoryConsole.SetBackColor(0, 0, _inventoryWidth, _inventoryHeight, Swatch.DbWood);
             _inventoryConsole.Print(1, 1, "Invetory", Colors.TextHeading);
+
+            // Starts RLNET's game loop
+            _rootConsole.Run();
+        }
+
+        // Event handler for RLNet's Update event
+        private static void OnRootConsoleUpdate(object sender, UpdateEventArgs e)
+        {
+            bool didPlayerAct = false;
+            RLKeyPress keyPress = _rootConsole.Keyboard.GetKeyPress();
+
+            if( keyPress != null)
+            {
+                switch (keyPress.Key)
+                {
+                    case (RLKey.Up):
+                        {
+                            didPlayerAct = CommandSystem.MovePlayer(Direction.Up);
+                            break;
+                        }
+                    case (RLKey.Down):
+                        {
+                            didPlayerAct = CommandSystem.MovePlayer(Direction.Down);
+                            break;
+                        }
+                    case (RLKey.Left):
+                        {
+                            didPlayerAct = CommandSystem.MovePlayer(Direction.Left);
+                            break;
+                        }
+                    case (RLKey.Right):
+                        {
+                            didPlayerAct = CommandSystem.MovePlayer(Direction.Right);
+                            break;
+                        }
+                    case (RLKey.Escape):
+                        {
+                            _rootConsole.Close();
+                            break;
+                        }
+                }
+            }
+
+            if (didPlayerAct)
+            {
+                _renderRequired = true;
+            }
         }
 
         private static void OnRootConsoleRender(object sender, UpdateEventArgs e)
         {
-            DungeonMap.draw(_mapConsole);
-            Player.Draw(_mapConsole, DungeonMap);
-            // Blits other consoles to root console
-            RLConsole.Blit(_mapConsole, 0, 0, _mapWidth, _mapHeight, _rootConsole, 0, _inventoryHeight);
-            RLConsole.Blit(_statConsole, 0, 0, _statWidth, _statHeight, _rootConsole, _mapWidth, 0);
-            RLConsole.Blit(_messageConsole, 0, 0, _messageWidth, _messageHeight, _rootConsole, 0, _screenHeight - _messageHeight);
-            RLConsole.Blit(_inventoryConsole, 0, 0, _inventoryWidth, _inventoryHeight, _rootConsole, 0, 0);
-            _rootConsole.Draw();
+            if (_renderRequired)
+            {
+                DungeonMap.draw(_mapConsole);
+                Player.Draw(_mapConsole, DungeonMap);
+              
+                // Blits other consoles to root console
+                RLConsole.Blit(_mapConsole, 0, 0, _mapWidth, _mapHeight, _rootConsole, 0, _inventoryHeight);
+                RLConsole.Blit(_statConsole, 0, 0, _statWidth, _statHeight, _rootConsole, _mapWidth, 0);
+                RLConsole.Blit(_messageConsole, 0, 0, _messageWidth, _messageHeight, _rootConsole, 0, _screenHeight - _messageHeight);
+                RLConsole.Blit(_inventoryConsole, 0, 0, _inventoryWidth, _inventoryHeight, _rootConsole, 0, 0);
 
+                _rootConsole.Draw();
+
+                _renderRequired = false;
+            }
         }
 
     }

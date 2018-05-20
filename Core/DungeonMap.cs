@@ -69,5 +69,34 @@ namespace RogueGame.Core
                 }
             }
         }
+
+        // Returns true when able to place actor on the cell else false
+        public bool SetActorPosition( Actor actor, int x, int y)
+        {
+            // Onlt allow actor placement if cell is walkable
+            if ( GetCell( x, y).IsWalkable)
+            {
+                // Previous cell actor was on is now walkable
+                SetIsWalkable(actor.X, actor.Y, true);
+                // Update actors position
+                actor.X = x;
+                actor.Y = y;
+                // Cell actor is on is no longer walkable
+                SetIsWalkable(actor.X, actor.Y, false);
+                // update fov if player has moved
+                if ( actor is Player)
+                {
+                    UpdatePlayerFieldOfView();
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public void SetIsWalkable( int x, int y, bool isWalkable)
+        {
+            Cell cell = GetCell(x, y);
+            SetCellProperties(cell.X, cell.Y, cell.IsTransparent, isWalkable, cell.IsExplored);
+        }
     }
 }
