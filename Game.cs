@@ -1,6 +1,8 @@
 ﻿using RLNET;
 using RogueGame.Core;
 using RogueGame.Systems;
+using RogueSharp.Random;
+using System;
 
 namespace RogueGame
 {
@@ -39,8 +41,16 @@ namespace RogueGame
         
         public static CommandSystem CommandSystem { get; private set; }
 
+        // Singleton of IRandom used to generate random numbers
+        public static IRandom Random { get; private set; }
+
         public static void Main(string[] args)
         {
+            int seed = (int) DateTime.UtcNow.Ticks;
+            Random = new DotNetRandom(seed);
+
+            string consoleTitle = "RogueSharp Game";
+
             string fontFileName = "terminal8x8.png";
             string windowName = "Rogue Game";
 
@@ -53,7 +63,7 @@ namespace RogueGame
 
             Player = new Player();
 
-            MapGenerator mapGenerator = new MapGenerator(_mapWidth, _mapHeight);
+            MapGenerator mapGenerator = new MapGenerator(_mapWidth, _mapHeight, 20, 13, 7);
             DungeonMap = mapGenerator.CreateMap();
             DungeonMap.UpdatePlayerFieldOfView();
 

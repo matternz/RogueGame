@@ -11,6 +11,14 @@ namespace RogueGame.Core
     // dungeon extends map
     public class DungeonMap : Map
     {
+
+        public List<Rectangle> Rooms;
+
+        public DungeonMap()
+        {
+            Rooms = new List<Rectangle>();
+        }
+
         //renders all symbols/colors for each cell
         public void draw( RLConsole mapConsole)
         {
