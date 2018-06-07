@@ -35,7 +35,7 @@ namespace RogueGame
 
         public static DungeonMap DungeonMap { get; private set; }
 
-        public static Player Player { get; private set; }
+        public static Player Player { get; set; }
 
         private static bool _renderRequired = true;
         
@@ -60,8 +60,6 @@ namespace RogueGame
             _messageConsole = new RLConsole(_messageWidth, _messageHeight);
             _statConsole = new RLConsole(_statWidth, _statHeight);
             _inventoryConsole = new RLConsole(_inventoryWidth, _inventoryHeight);
-
-            Player = new Player();
 
             MapGenerator mapGenerator = new MapGenerator(_mapWidth, _mapHeight, 20, 13, 7);
             DungeonMap = mapGenerator.CreateMap();

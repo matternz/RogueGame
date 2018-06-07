@@ -106,5 +106,13 @@ namespace RogueGame.Core
             Cell cell = GetCell(x, y);
             SetCellProperties(cell.X, cell.Y, cell.IsTransparent, isWalkable, cell.IsExplored);
         }
+
+        // called by MapGenerator after new map is created and adds player to the map
+        public void AddPlayer(Player player)
+        {
+            Game.Player = player;
+            SetIsWalkable(player.X, player.Y, false);
+            UpdatePlayerFieldOfView();
+        }
     }
 }
