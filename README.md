@@ -3,6 +3,8 @@
 
 Small project I'm working on to learn C# and improve programming skills. From tutorial https://roguesharp.wordpress.com/
 
+Current branch is working through tutorial
+
 ##ProgressList
 - [X] Introduction and Goals
 - [X] Creating the Project  
@@ -11,8 +13,8 @@ Small project I'm working on to learn C# and improve programming skills. From tu
 - [X] Simple Map Drawing  
 - [X] Player  
 - [X] Player Input  
-- [ ] Simple Map Generation  
-- [ ] Connecting Rooms with Hallways  
+- [X] Simple Map Generation  
+- [X] Connecting Rooms with Hallways  
 - [ ] Message Log  
 - [ ] Player Stats  
 - [ ] Monster Generation  
